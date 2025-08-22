@@ -1,28 +1,33 @@
 'use strict';
 
-const emploerList = document.querySelectorAll('li');
+const emploerList = document.querySelector('ul');
 
 function parsSalary(strSalary) {
   return Number(strSalary.replace(/[$,]/g, ''));
 }
 
 function sortList(list) {
-  return [...list].sort((a, b) => {
+  const employers = list.querySelectorAll('li');
+
+  const emploerRatting = [...employers].sort((a, b) => {
     const aSalary = parsSalary(a.getAttribute('data-salary'));
     const bSalary = parsSalary(b.getAttribute('data-salary'));
 
     return bSalary - aSalary;
   });
+
+  emploerRatting.forEach((emploer) => emploerList.append(emploer));
 }
 
 function getEmployees(list) {
   const informationPeople = [];
+  const peopleList = list.querySelectorAll('li');
 
-  [...list].forEach((emploer) => {
+  [...peopleList].forEach((emploer) => {
     const emploerInfo = {
       name: emploer.textContent.trim(),
       position: emploer.getAttribute('data-position'),
-      salary: emploer.getAttribute('data-salary'),
+      salary: parsSalary(emploer.getAttribute('data-salary')),
       age: Number(emploer.getAttribute('data-age')),
     };
 
@@ -32,10 +37,5 @@ function getEmployees(list) {
   return informationPeople;
 }
 
-const emploerRaring = sortList(emploerList);
-
-getEmployees(emploerRaring);
-
-const allList = emploerList[0].parentElement;
-
-emploerRaring.forEach((employer) => allList.append(employer));
+sortList(emploerList);
+getEmployees(emploerList);
