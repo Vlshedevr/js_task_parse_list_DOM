@@ -16,7 +16,7 @@ function sortList(list) {
     return bSalary - aSalary;
   });
 
-  emploerRatting.forEach((emploer) => emploerList.append(emploer));
+  emploerRatting.forEach((emploer) => list.append(emploer));
 }
 
 function getEmployees(list) {
